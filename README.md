@@ -1,40 +1,96 @@
-# Crear un backend básico con Node.js y Express
 
-# Inicializar proyecto
+# Backend - Ayudantía DSM
 
-npm init -y
+Este backend forma parte del sistema de gestión para paseadores de mascotas. Está construido con **Node.js**, **Express**, **Sequelize**, y utiliza **SQLite** como base de datos.
 
-# Instalar dependencias
+---
 
-npm install express
-npm install --save-dev nodemon
+## Instalación
 
-# Crear la estructura básica
+```bash
+npm install
+```
 
-// index.js
-const express = require("express");
-const app = express();
-const PORT = 3000;
+### Variables de entorno
 
-// Ruta principal
-app.get("/", (req, res) => {
-  res.send("Hello World desde mi backend con Express");
-});
+Crear un archivo `.env` con el siguiente contenido:
 
-// Iniciar servidor
-app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
-});
+```env
+PORT=
+JWT_SECRET=
+NODE_ENV=
+```
 
+---
 
-# Agregar script a package.json
+## Iniciar el servidor
 
-"scripts": {
-  "start": "node index.js",
-  "dev": "nodemon index.js"
-}
-
-# Ejecutar el servidor
-
-npm start
+```bash
 npm run dev
+```
+
+---
+
+## Comandos útiles
+
+### Migraciones y seeds
+
+```bash
+# Crear base de datos y aplicar migraciones
+npx sequelize-cli db:create
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+
+# Deshacer migraciones
+npx sequelize-cli db:migrate:undo:all
+
+# Reiniciar seeds
+npx sequelize-cli db:seed:undo:all
+npx sequelize-cli db:seed:all
+
+# Eliminar y recrear todo desde cero
+npx sequelize-cli db:drop
+npx sequelize-cli db:create
+npx sequelize-cli db:migrate
+npx sequelize-cli db:seed:all
+```
+
+---
+
+## Estructura del proyecto
+
+```
+├── src/                        # Código fuente principal
+│   ├── config/                 # Configuración general del proyecto
+│   │   ├── config.json         # Configuración de Sequelize (dev, test, prod)
+│   ├── controllers/            # Lógica de negocio (manejo de requests/responses)
+│   ├── middlewares/            # Middlewares personalizados para Express
+│   ├── migrations/             # Migraciones de la base de datos (sequelize-cli)
+│   ├── models/                 # Definición de modelos y conexión DB
+│   │   ├── database/           # Configuración de Sequelize y modelos
+│   │   │   ├── index.js        # Carga dinámica de modelos y asociaciones
+│   │   │   ├── sequelize.js    # Conexión manual a SQLite
+│   │   ├── server.js           # Clase Server: configuración de Express y DB
+│   ├── routes/                 # Definición de endpoints de la API
+│   ├── seeders/                # Datos iniciales de prueba (sequelize-cli)
+│   ├── tests/                  # Pruebas automatizadas
+│   │   ├── integration/        # Pruebas de endpoints y flujos completos
+│   │   ├── unit/               # Pruebas unitarias por funciones/módulos
+│   ├── utils/                  # Funciones auxiliares y servicios externos
+├── app.js                      # Punto de entrada del servidor
+├── .sequelizerc                # Configuración personalizada de sequelize-cli
+├── localDb.sqlite              # Base de datos local (SQLite)
+
+```
+
+---
+
+## Dependencias principales
+
+```bash
+# Core
+npm install express cors morgan sequelize sqlite3 jsonwebtoken bcryptjs multer dotenv
+
+
+# Dev y herramientas
+npm install --save-dev nodemon sequelize-cli
