@@ -6,6 +6,9 @@ const logger  = require("morgan");
 const path    = require("path");
 const sequelize = require("./database/sequelize");
 
+const { getHealthStatus } = require("../controllers/healthController");
+const { getDbTables } = require("../controllers/dbController");
+
 class Server {
   constructor() {
     console.log("Iniciando Server class");
@@ -35,9 +38,7 @@ class Server {
     this.app.use(express.json());
     this.app.use(
       cors({
-        origin: [
-          "http://localhost:7070",
-        ],
+        origin: true,
         credentials: true,
       })
     );
@@ -45,9 +46,8 @@ class Server {
   }
 
   routes() {
-    this.app.get("/", (req, res) => {
-      res.json({ message: "API running" });
-    });
+    this.app.get("/", getHealthStatus);
+    this.app.get("/db/tables", getDbTables);
   }
 
   listen() {
