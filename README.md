@@ -20,6 +20,10 @@ PORT=
 JWT_SECRET=
 NODE_ENV=
 ```
+## Para generar un JWT secreto:
+```bash
+node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
+```
 
 ---
 
@@ -32,6 +36,12 @@ npm run dev
 ---
 
 ## Comandos útiles
+
+### Crear un nuevo seed o migración
+```bash
+npx sequelize-cli seed:generate --name NOMBRE
+npx sequelize-cli migration:generate --name NOMBRE
+```
 
 ### Migraciones y seeds
 
