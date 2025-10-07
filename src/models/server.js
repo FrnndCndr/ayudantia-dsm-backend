@@ -5,9 +5,8 @@ const cors    = require("cors");
 const logger  = require("morgan");
 const path    = require("path");
 const sequelize = require("./database/sequelize");
-
-const { getHealthStatus } = require("../controllers/healthController");
-const { getDbTables } = require("../controllers/dbController");
+const authRoutes = require("../routes/auth/auth.routes");
+const productRoutes = require("../routes/product/product.routes");
 
 class Server {
   constructor() {
@@ -15,7 +14,8 @@ class Server {
     this.app  = express();
     this.port = process.env.PORT || 3000;
     this.paths = {
-        
+      auth: "/api/auth",
+      products: "/api/products",
     };
 
     this.dbConnection();
@@ -46,8 +46,11 @@ class Server {
   }
 
   routes() {
-    this.app.get("/", getHealthStatus);
-    this.app.get("/db/tables", getDbTables);
+    this.app.get("/", (req, res) => {
+      res.json({ message: "API running" });
+    });
+    this.app.use(this.paths.auth, authRoutes);
+    this.app.use(this.paths.products, productRoutes);
   }
 
   listen() {
