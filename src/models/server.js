@@ -7,15 +7,18 @@ const path    = require("path");
 const sequelize = require("./database/sequelize");
 const authRoutes = require("../routes/auth/auth.routes");
 const productRoutes = require("../routes/product/product.routes");
+const songRoutes = require("../routes/song/song.routes");
 
 class Server {
   constructor() {
     console.log("Iniciando Server class");
     this.app  = express();
-    this.port = process.env.PORT || 3000;
+    this.port = process.env.PORT || 7070;
+    this.startTime = Date.now();
     this.paths = {
       auth: "/api/auth",
       products: "/api/products",
+      songs: "/songs",
     };
 
     this.dbConnection();
@@ -38,7 +41,7 @@ class Server {
     this.app.use(express.json());
     this.app.use(
       cors({
-        origin: true,
+        origin: process.env.CORS_ORIGIN || "*",
         credentials: true,
       })
     );
@@ -46,11 +49,9 @@ class Server {
   }
 
   routes() {
-    this.app.get("/", (req, res) => {
-      res.json({ message: "API running" });
-    });
     this.app.use(this.paths.auth, authRoutes);
     this.app.use(this.paths.products, productRoutes);
+    this.app.use(this.paths.songs, songRoutes);
   }
 
   listen() {
