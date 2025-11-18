@@ -21,7 +21,33 @@ module.exports = {
         createdAt: new Date(),
         updatedAt: new Date()
       },
-      // Agrega más canciones aquí
+      {
+        title: 'Por Esos Ojos',
+        artist: 'Fuerza Regida',
+        duration: 188, // 3:08 minutos
+        coverUrl: 'https://res.cloudinary.com/dm3j4u2pn/image/upload/v1763497555/por_esos_ojos_cover_wdpvtd.jpg',
+        audioUrl: 'https://res.cloudinary.com/dm3j4u2pn/video/upload/v1763497699/poresosojos_ik5dhe.mp3',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'MY LOVE',
+        artist: 'FloyyMenor y Lewis Somes',
+        duration: 172, // 2:52 minutos
+        coverUrl: 'https://res.cloudinary.com/dm3j4u2pn/image/upload/v1763497555/mylove_cover_q13ukl.jpg',
+        audioUrl: 'https://res.cloudinary.com/dm3j4u2pn/video/upload/v1763497770/mylove_k3nzfj.mp3',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      },
+      {
+        title: 'TQM',
+        artist: 'Fuerza Regida',
+        duration: 157, // 2:37 minutos
+        coverUrl: 'https://res.cloudinary.com/dm3j4u2pn/image/upload/v1763497555/tqm_cover_zodsif.jpg',
+        audioUrl: 'https://res.cloudinary.com/dm3j4u2pn/video/upload/v1763497860/tqm_askpdm.mp3',
+        createdAt: new Date(),
+        updatedAt: new Date()
+      }
     ], {});
   },
 
